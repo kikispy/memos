@@ -1,0 +1,42 @@
+version: '3'
+services:
+  memos:
+    image: neosmemo/memos:stable
+    container_name: memos
+    restart: unless-stopped
+    ports:
+      - "5230:5230"
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./data/memos:/var/opt/memos
+    environment:
+      - MEMOS_DRIVER=postgres
+      - MEMOS_DSN=postgresql://postgres:vfdlnsldaj21@pg/memos?sslmode=disable
+    depends_on:
+      pg:
+        condition: service_healthy
+    networks:
+      memos_net:
+
+  pg:
+    image: postgres:15.4
+    container_name: pg
+    restart: on-failure:3
+    # ports:
+    #   - "5432:5432"
+    volumes:
+      - ./data/pg:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=vfdlnsldaj21
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=memos
+    healthcheck:
+      test: [ "CMD", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      memos_net:
+
+networks:
+  memos_net:

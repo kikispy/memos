@@ -1,0 +1,49 @@
+version: '3'
+services:
+  memos:
+    image: neosmemo/memos:stable
+    container_name: memos
+    restart: unless-stopped
+    ports:
+      - "5230:5230"
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./data/memos:/var/opt/memos
+    environment:
+      - MEMOS_DRIVER=mysql
+      - MEMOS_DSN=root:memos@tcp(db)/memos_prod
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      memos_net:
+
+  db:
+    image: mysql:8.0
+    container_name: db
+    restart: on-failure:3
+    # ports:
+    #   - "3306:3306"
+    command: 
+      - --default-authentication-plugin=caching_sha2_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_general_ci
+      - --explicit_defaults_for_timestamp=true
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./data/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=memos
+      - MYSQL_DATABASE=memos_prod
+      # - MYSQL_USER=memos
+      # - MYSQL_PASSWORD=memos
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "--silent"]
+      interval: 3s
+      retries: 5
+      start_period: 30s
+    networks:
+      memos_net:
+
+networks:
+  memos_net:
