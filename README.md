@@ -17,6 +17,9 @@ Memos是一项隐私优先的轻量级笔记服务。轻松捕捉并分享您的
 > https://github.com/usememos/memos
 
 ## 3. 自托管搭建
+
+> 以下数据库组合搭建模式自选其一
+
 - sqlite
 ```bash
 docker-compose up -d
