@@ -18,6 +18,11 @@ Memos是一项隐私优先的轻量级笔记服务。轻松捕捉并分享您的
 
 ## 3. 自托管搭建
 
+```bash
+git clone https://github.com/kikispy/memos.git
+cd memos
+```
+
 > 以下数据库组合搭建模式自选其一
 
 - sqlite
