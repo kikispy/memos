@@ -1,5 +1,5 @@
 # Memos
-## 1.项目描述
+## 1. 项目描述
 
 Memos是一项隐私优先的轻量级笔记服务。轻松捕捉并分享您的精彩想法。
 - 开源且永久免费。通过我们的开源解决方案拥抱创造力无国界的未来——今天、明天、永远免费。
@@ -10,7 +10,7 @@ Memos是一项隐私优先的轻量级笔记服务。轻松捕捉并分享您的
 
 ![homepage](img/homepage.jpg)
 
-## 2.项目链接
+## 2. 项目链接
 
 > https://www.usememos.com/docs/install/self-hosting
 > 
